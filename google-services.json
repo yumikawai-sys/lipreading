@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1067816952284",
+    "project_id": "sendingvideo-4f32e",
+    "storage_bucket": "sendingvideo-4f32e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067816952284:android:d66f2c45acf29935bdef19",
+        "android_client_info": {
+          "package_name": "com.company.videosending"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1067816952284-a4ddh64pvun5damvq9gjjvsoq5q6lllr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIR4UucEJxDbJMQzfQYDrR1Iy9becBGzg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1067816952284-a4ddh64pvun5damvq9gjjvsoq5q6lllr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

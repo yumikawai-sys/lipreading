@@ -1,0 +1,16 @@
+0. Expo SDK Version => 49
+1. expo start -c
+2. android only
+
+Feb 26
+cannot share the video (not sure it is recorded because cannot see the video from outside)
+
+
+3. Public-facing name for project
+project-1067816952284
+
+email: yycharlottetown@gmail.com
+
+
+
+
