@@ -1,13 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Camera } from 'expo-camera';
 import { View, TouchableOpacity, Text, Platform, PermissionsAndroid, Dimensions, StyleSheet } from 'react-native';
-import * as Sharing from 'expo-sharing';
-
 
 const CameraScreen = () => {
   const cameraRef = useRef(null);
   const [isRecording, setIsRecording] = useState(false);
   const [videoUri, setVideoUri] = useState(null);
+  const folderId = '1J-JJDnEELCjMv3vQKTZ5cDcbGMN9xLqz';
 
   const requestCameraPermission = async () => {
     console.log('Platform.OS', Platform.OS);
@@ -27,25 +26,30 @@ const CameraScreen = () => {
     }
   };
 
-  const shareVideo = async (videoUri) => {
+  const uploadToDrive = async (videoUri, folderId) => {
+    const apiUrl = `https://www.googleapis.com/upload/drive/v3/files?uploadType=media&supportsAllDrives=true&parents=${folderId}`;
+    const formData = new FormData();
+    formData.append('file', {
+      uri: videoUri,
+      type: 'video/mp4',
+      name: 'video.mp4',
+    });
+
     try {
-      const result = await Sharing.shareAsync(videoUri, {
-        mimeType: 'video/mp4',
-        dialogTitle: 'Share this video',
-        UTI: 'public.mpeg-4',
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'video/mp4',
+        },
+        body: formData,
       });
-  
-      if (result.action === Sharing.sharedAction) {
-        console.log('Video shared successfully');
-      } else {
-        console.log('Sharing canceled or failed');
-      }
+      const data = await response.json();
+      console.log('File uploaded:', data);
     } catch (error) {
-      console.error('Error sharing video:', error.message);
+      console.error('Error uploading file to Google Drive:', error);
     }
   };
 
-  
   useEffect(() => {
     console.log('useEffect - requesting camera permission');
     requestCameraPermission();
@@ -58,14 +62,13 @@ const CameraScreen = () => {
             const options = { quality: Camera.Constants.VideoQuality['720p'] };
             const data = await cameraRef.current.recordAsync(options);
             console.log(data);
-            setVideoUri(data.uri);        
+            setVideoUri(data.uri);
         } catch (error) {
             console.error('Error recording:', error);
         }
     }
   };
-  
-  
+
   const stopRecording = () => {
     if (cameraRef.current) {
       cameraRef.current.stopRecording();
@@ -76,35 +79,24 @@ const CameraScreen = () => {
     if (isRecording) {
       stopRecording();
       setIsRecording(false);
-  
-      // Share the recorded video
+
+      // upload
       try {
         if (videoUri) {
-          const shared = await Sharing.shareAsync(videoUri, {
-            mimeType: 'video/mp4',
-            dialogTitle: 'Share this video',
-          });
-      
-          console.log('Shared result:', shared);
-      
-          if (shared) {
-            console.log('Video shared successfully');
-          } else {
-            console.log('Sharing was cancelled or failed');
-          }
+          await uploadToDrive(videoUri, folderId);
+          console.log('Video uploaded to Google Drive');
         } else {
           console.log('Video URI is null or undefined');
         }
       } catch (error) {
-        console.error('Error sharing video:', error.message);
+        console.error('Error uploading video to Google Drive:', error);
       }
     } else {
       startRecording();
       setIsRecording(true);
     }
   };
-  
-  
+
   return (
     <View style={styles.container}>
       <Camera
@@ -129,7 +121,7 @@ const styles = StyleSheet.create({
   },
   camera: {
     flex: 1,
-    aspectRatio: 16 / 9, // Set the aspect ratio to match your camera's preview aspect ratio
+    aspectRatio: 16 / 9,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
