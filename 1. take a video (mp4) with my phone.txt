@@ -1,0 +1,75 @@
+1. take a video (mp4) with my phone 
+
+2. send it to server (my PC)
+クラウドストレージを使用する: PCに動画を直接送信する代わりに、クラウドストレージサービス（Google Drive、Dropbox、OneDriveなど）を使用して動画をアップロードし、PCでダウンロードすることもできます。この場合、動画をクラウドストレージにアップロードする手順を組み込む必要があります。
+
+クラウドストレージのイベントトリガー
+
+イベントトリガーの設定: クラウドストレージサービスの管理コンソールやAPIを使用して、新しい動画ファイルがアップロードされたときにトリガーとなるイベントを設定します。一般的なトリガーオプションには、ファイルの作成、変更、アップロードなどが含まれます。
+
+処理を開始するプログラムの設定: イベントトリガーが発生したときに実行されるプログラムを設定します。これには、スクリプト、関数、またはアプリケーションを使用することができます。このプログラムは、通知を受け取り、自動的に処理を開始します。
+
+
+Google Driveを使用して自動的に処理を開始する方法は、Google Apps Scriptを使用することが一般的です。以下は、Google Driveで新しい動画ファイルがアップロードされたときに処理を開始する手順です。
+
+Google Apps Scriptの作成:
+
+Google Driveにアクセスして、新しいGoogle Apps Scriptプロジェクトを作成します。
+スクリプトエディタで、Google Apps Scriptのコードを作成します。
+トリガーの設定:
+
+スクリプトエディタのメニューから「編集」→「トリガー」を選択します。
+「トリガーを追加」をクリックして、イベントトリガーを設定します。トリガーの種類は、「ファイルを追加」などを選択します。
+トリガーの発生条件を設定します（フォルダの特定の場所、特定のファイル形式など）。
+スクリプトの実装:
+
+Google Apps Scriptに、新しいファイルがアップロードされたときに実行される関数を実装します。この関数では、動画ファイルの取得や前処理、Lip Readingモデルの適用などを行います。
+Google DriveのAPIを使用して、新しいファイルを取得し、必要な処理を行います。必要に応じて動画のダウンロードや前処理スクリプトの呼び出しを行います。
+Lip Readingの実行:
+
+前処理が完了したら、Lip Readingモデルを使用して動画からトランスクリプトを生成します。これには、必要なPythonスクリプトを実行するために、Google Apps Scriptの外部APIを呼び出すことができます。
+トランスクリプトの保存:
+
+生成されたトランスクリプトを、Google Apps Scriptを使用してGoogle Driveに保存します。これにより、後でアクセスできるようになります。
+以上の手順に従ってGoogle Driveを使用して自動的に処理を開始し、Lip Readingを実行することができます。Google Apps Scriptを使用することで、Google Driveでのファイルの変更や追加をトリガーにしてスクリプトを実行することが可能です。
+
+----
+
+GoogleドライブAPIを使用するためには、Google Cloud Platform（GCP）の設定で適切なアクセス権を確認し、必要な権限を付与する必要があります。以下に手順を示します：
+
+https://console.cloud.google.com/welcome/new?authuser=2
+
+Google Cloud Platformにアクセスする: ブラウザで Google Cloud Console にアクセスしてください。
+
+プロジェクトを選択する: 使用しているプロジェクトを選択します。新しいプロジェクトを作成する必要がある場合は、新しいプロジェクトを作成してください。
+
+APIとサービスを有効化する: 左側のメニューから「APIとサービス」を選択し、利用するAPIを有効化します。ここで、GoogleドライブAPIを有効化する必要があります。
+
+認証情報を設定する: 左側のメニューから「認証情報」を選択し、認証情報を作成します。GoogleドライブAPIを使用するために、サービスアカウントキーを作成する必要があります。
+
+サービスアカウントキーを作成する: 新しいサービスアカウントを作成し、JSON形式で認証情報をダウンロードします。このファイルには、アクセス権の情報が含まれています。
+
+アクセス権を付与する: サービスアカウントキーを使用してアクセス権を付与します。GoogleドライブAPIに対するアクセス権を正しく設定し、必要な権限を付与してください。フォルダへの書き込み権限などが必要になる場合があります。
+
+
+
+3. pre-process video to trim unnecessary parts
+
+4. convert from mp4 to mpg
+
+5. get transctiption from the model save on my pc
+
+6. send and save the transctiption on MongoDB
+
+7. send the transctiption to my phone and other users
+
+
+Google App Scriptについて：
+https://qiita.com/gandarla/items/2d229fca0a4b948448c9
+
+
+共有フォルダID：
+https://drive.google.com/drive/folders/1J-JJDnEELCjMv3vQKTZ5cDcbGMN9xLqz?usp=sharing
+
+
+8. display the transcription on my phone and otherr's phones
